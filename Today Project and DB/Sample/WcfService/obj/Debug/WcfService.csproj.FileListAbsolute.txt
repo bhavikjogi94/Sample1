@@ -1,0 +1,11 @@
+C:\Projects\Sample\WcfService\bin\WcfService.dll
+C:\Projects\Sample\WcfService\bin\WcfService.pdb
+C:\Projects\Sample\WcfService\obj\Debug\WcfService.csprojResolveAssemblyReference.cache
+C:\Projects\Sample\WcfService\obj\Debug\WcfService.dll
+C:\Projects\Sample\WcfService\obj\Debug\WcfService.pdb
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\WcfService\bin\WcfService.dll.config
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\WcfService\bin\WcfService.dll
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\WcfService\bin\WcfService.pdb
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\WcfService\obj\Debug\WcfService.csprojResolveAssemblyReference.cache
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\WcfService\obj\Debug\WcfService.dll
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\WcfService\obj\Debug\WcfService.pdb

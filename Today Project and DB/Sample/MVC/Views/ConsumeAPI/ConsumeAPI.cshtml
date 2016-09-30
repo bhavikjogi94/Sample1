@@ -1,0 +1,300 @@
+﻿@model MVC.Models.Customer
+@{
+    ViewBag.Title = "ConsumeAPI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h4>Consume WebAPI from AJAX Jquery</h4>
+@using (Html.BeginForm())
+{ 
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CustomerID, new { Value = "0" })
+
+        <div class="row">
+            @*Left Side Part*@
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.BirthDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "3" })
+                        @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @tabindex = "5" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Country.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.CountryID, Enumerable.Empty<SelectListItem>(), "Select", new { @class = "form-control", @tabindex = "7" })
+                        @*@Html.DropDownListFor(model => model.CountryID, new SelectList(ViewBag.CountryList, "CountryID", "CountryName"), "Select", new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-margin-left-3 col-md-6">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.IsActive, new { @tabindex = "9" })
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-6">
+                        <input id="btnSave" type="submit" value="Save" class="btn btn-success" tabindex="10" />
+                        <input id="btnFillData" type="submit" value="Fill Test Data" class="col-md-offset-2 btn btn-primary" tabindex="11" />
+                    </div>
+                </div>
+
+            </div>
+
+            @*Right Side Part*@
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @tabindex = "4" })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @tabindex = "6" })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Province.ProvinceName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.ProvinceID, Enumerable.Empty<SelectListItem>(), "Select", new { @class = "form-control", @tabindex = "8" })
+                        @*@Html.DropDownListFor(model => model.ProvinceID, new SelectList(ViewBag.ProvinceList, "ProvinceID", "ProvinceName"), "Select", new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.ProvinceID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <div id="divCustomers"></div>
+        <div id="divNoRecords" class="hidden">
+            <strong>Sorry! </strong>No Record(s) found.
+        </div>
+    </div>    
+}
+<script type="text/javascript">
+    function ClearControls() {
+        $('#CustomerID').val('0');
+        $('#FirstName').val('');
+        $('#LastName').val('');
+        $('#BirthDate').val('');
+        $('#Phone').val('');
+        $('#Email').val('');
+        $('#Address').val('');
+        $('#IsActive').prop('checked', false);
+        $('#CountryID').val('Select');
+        $('#ProvinceID').val('Select');
+    }
+    function BindCustomers() {
+        $.ajax({
+            url: 'http://localhost:2319/api/Customer/GetCustomers',
+            //url: 'http://localhost:57840/CustomerService.svc/Customer',
+            type: "GET",
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function (data) {
+                //alert(JSON.stringify(data));
+                BindGrid(data);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                alert(jqXhr.status + '-' + errorThrown + '\n' + jqXhr.responseJSON.Message);
+            }
+        });
+    }
+    function BindGrid(data) {
+        if (JSON.stringify(data) != '[]') {
+            var strResult = '<table class="table table-bordered"><tbody><tr class="bg-primary"><th>First Name</th><th>Last Name</th><th>Birth Date</th><th>Phone</th><th>Email</th><th>Address</th><th>Province</th><th>Country</th><th>Active</th><th>Edit | Delete</th></tr>';
+            $.each(data, function (i, value) {
+                strResult += '<tr><td>' + '<input type="hidden" id="hdnCustomerID" value=\"' + value.CustomerID + '\"/>' + value.FirstName + '</td><td>' + value.LastName + '</td><td>' + convertDate(value.BirthDate) + '</td><td>' + value.Phone + '</td><td>' + value.Email + '</td><td>' + value.Address + '</td><td>' + value.Province.Province1 + '</td><td>' + value.Country.Country1 + '</td><td>' + value.IsActive + '</td><td>' + '<a class="cursordefault" onclick=\"return Edit(this);\">Edit</a>' + ' | ' + '<a class="cursordefault" onclick=\"return Delete(this);\">Delete</a>' + '</td></tr>';
+            });
+            strResult += '</tbody></table>';
+            $("#divCustomers").html(strResult);
+        }
+        else {
+            $('#divNoRecords').prop('class', 'show alert alert-danger fade in');
+        }
+    }
+    function BindCountry() {
+        $.ajax({
+            url: 'http://localhost:2319/api/Customer/GetCountry',
+            type: "GET",
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function (data) {
+                $("#CountryID").html("");
+                $("#CountryID").append($('<option>Select</option>'));
+                $.each(data, function (i, value) {
+                    $("#CountryID").append(
+                        $('<option></option>').val(data[i].CountryID).html(data[i].Country1));
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                alert(jqXhr.status + '-' + errorThrown + '\n' + jqXhr.responseJSON.Message);
+            }
+        });
+    }
+    function BindProvince(countryID) {
+        $.ajax({
+            url: 'http://localhost:2319/api/Customer/GetProvince/' + countryID,
+            type: "GET",
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function (data) {
+                $("#ProvinceID").html("");
+                $("#ProvinceID").append($('<option>Select</option>'));
+                $.each(data, function (i, value) {
+                    $("#ProvinceID").append(
+                        $('<option></option>').val(data[i].ProvinceID).html(data[i].Province1));
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                alert(jqXhr.status + '-' + errorThrown + '\n' + jqXhr.responseJSON.Message);
+            }
+        });
+    }
+    function Edit(obj) {
+        var tr = $(obj).parents('tr:first');
+        var customerID = tr.find("#hdnCustomerID").val();
+
+        $.ajax({
+            url: 'http://localhost:2319/api/Customer/GetByID/' + customerID,
+            //url: 'http://localhost:2319/api/Response/GetCustomerByID/' + customerID,
+            type: "GET",
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function (data) {
+                //alert(JSON.stringify(data));
+                ClearControls();
+                $('#CustomerID').val(data.CustomerID);
+                $('#FirstName').val(data.FirstName);
+                $('#LastName').val(data.LastName);
+                $('#BirthDate').val(convertDate(data.BirthDate));
+                $('#Phone').val(data.Phone);
+                $('#Email').val(data.Email);
+                $('#Address').val(data.Address);
+                $('#IsActive').prop('checked', data.IsActive);
+                BindCountry();
+                BindProvince(data.CountryID);
+                $('#CountryID').val(data.CountryID);
+                $('#ProvinceID').val(data.ProvinceID);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                alert(jqXhr.status + '-' + errorThrown + '\n' + jqXhr.responseJSON.Message);
+            }
+        });
+    }
+
+    function Delete(obj) {
+        var tr = $(obj).parents('tr:first');
+        var firstName = tr.find('td')[0].innerText;
+        var customerID = tr.find("#hdnCustomerID").val();
+        var msg = format("Are you sure you want to delete {0}?", firstName);
+        if (confirm(msg)) {
+            $.ajax({
+                url: 'http://localhost:2319/api/Customer/DeleteCustomer/' + customerID,
+                type: "POST",
+                dataType: "json",
+                async: false,
+                cache: false,
+                success: function (data) {
+                    alert(data);
+                    BindCustomers();
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert(jqXhr.status + '-' + errorThrown + '\n' + jqXhr.responseJSON.Message);
+                }
+            });
+        }
+    }
+
+    $(document).ready(function () {
+        $('#aConsume').addClass('active');
+        $('#FirstName').focus();
+        BindCountry();
+        $('#CountryID').change(function () {
+            BindProvince($('#CountryID').val());
+        })
+        BindCustomers();
+
+        $('#btnSave').click(function () {
+            if ($("form").valid()) {
+                var customer = {
+                    CustomerID: $('#CustomerID').val(),
+                    FirstName: $('#FirstName').val(),
+                    LastName: $('#LastName').val(),
+                    BirthDate: $('#BirthDate').val(),
+                    Phone: $('#Phone').val(),
+                    Email: $('#Email').val(),
+                    Address: $('#Address').val(),
+                    ProvinceID: $('#ProvinceID').val(),
+                    CountryID: $('#CountryID').val(),
+                    IsActive: $('#IsActive').prop('checked')
+                };
+                $.ajax({
+                    url: 'http://localhost:2319/api/Customer/SaveCustomer',
+                    type: "POST",
+                    dataType: "json",
+                    data: customer,
+                    async: false,
+                    cache: false,
+                    success: function (data) {
+                        alert(data);
+                        BindCustomers();
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        alert(jqXhr.status + '-' + errorThrown + '\n' + jqXhr.responseJSON.Message);
+                    }
+                });
+            }
+        })
+        $('#btnFillData').click(function () {
+            $('#CustomerID').val('0');
+            $('#FirstName').val('First Name');
+            $('#LastName').val('Last Name');
+            $('#BirthDate').val('05/09/1962');
+            $('#Phone').val('568-895-8956');
+            $('#Email').val('Test@gmail.com');
+            $('#Address').val('45 Berry street ');
+            $('#IsActive').prop('checked', true);
+            $('#CountryID').val('2');
+            setTimeout(BindProvince, 500, '2');
+            $('#ProvinceID').val('53');
+        });
+    });
+</script>

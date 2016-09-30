@@ -1,0 +1,15 @@
+C:\Projects\Sample\WebForms_EF_DB_First\bin\WebForms_EF_DB_First.dll
+C:\Projects\Sample\WebForms_EF_DB_First\bin\WebForms_EF_DB_First.pdb
+C:\Projects\Sample\WebForms_EF_DB_First\bin\Antlr3.Runtime.dll
+C:\Projects\Sample\WebForms_EF_DB_First\bin\EntityFramework.dll
+C:\Projects\Sample\WebForms_EF_DB_First\bin\EntityFramework.SqlServer.dll
+C:\Projects\Sample\WebForms_EF_DB_First\bin\Microsoft.Web.Infrastructure.dll
+C:\Projects\Sample\WebForms_EF_DB_First\bin\Newtonsoft.Json.dll
+C:\Projects\Sample\WebForms_EF_DB_First\bin\WebGrease.dll
+C:\Projects\Sample\WebForms_EF_DB_First\bin\Antlr3.Runtime.pdb
+C:\Projects\Sample\WebForms_EF_DB_First\bin\EntityFramework.xml
+C:\Projects\Sample\WebForms_EF_DB_First\bin\EntityFramework.SqlServer.xml
+C:\Projects\Sample\WebForms_EF_DB_First\bin\Newtonsoft.Json.xml
+C:\Projects\Sample\WebForms_EF_DB_First\obj\Debug\WebForms_EF_DB_First.csprojResolveAssemblyReference.cache
+C:\Projects\Sample\WebForms_EF_DB_First\obj\Debug\WebForms_EF_DB_First.dll
+C:\Projects\Sample\WebForms_EF_DB_First\obj\Debug\WebForms_EF_DB_First.pdb

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="Customer">
+  <DataContextMoniker Name="/CustomerDataContext" />
+  <nestedChildShapes>
+    <classShape Id="1c3233c8-1d6b-4fb9-bd89-441e0b6616ed" absoluteBounds="2.125, 4, 2, 1.1939925130208331">
+      <DataClassMoniker Name="/CustomerDataContext/Country" />
+      <nestedChildShapes>
+        <elementListCompartment Id="67f37c8b-ac1e-4677-bc9a-75ac8e3edb98" absoluteBounds="2.14, 4.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e0103029-8bca-404a-89e2-1863fd7d3d40" absoluteBounds="7.625, 2.75, 2, 3.6939111328125">
+      <DataClassMoniker Name="/CustomerDataContext/Customer" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c8f798ea-4ea4-4b5f-9eb7-6547743c5c9c" absoluteBounds="7.64, 3.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1a0e942f-5fc0-4be4-a568-d3b31a5f4919" absoluteBounds="4.875, 4, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/CustomerDataContext/Province" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6e538d16-cc9e-4cd9-98fe-ce71c7f122d3" absoluteBounds="4.8900000000000006, 4.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.125 : 5.19399251302083); (3.125 : 5.9463525390625); (7.625 : 5.9463525390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CustomerDataContext/Country/Country_Customer" />
+      <nodes>
+        <classShapeMoniker Id="1c3233c8-1d6b-4fb9-bd89-441e0b6616ed" />
+        <classShapeMoniker Id="e0103029-8bca-404a-89e2-1863fd7d3d40" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.875 : 4.69314697265625); (7.625 : 4.69314697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CustomerDataContext/Province/Province_Customer" />
+      <nodes>
+        <classShapeMoniker Id="1a0e942f-5fc0-4be4-a568-d3b31a5f4919" />
+        <classShapeMoniker Id="e0103029-8bca-404a-89e2-1863fd7d3d40" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.125 : 4.59699625651042); (4.875 : 4.59699625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/CustomerDataContext/Country/Country_Province" />
+      <nodes>
+        <classShapeMoniker Id="1c3233c8-1d6b-4fb9-bd89-441e0b6616ed" />
+        <classShapeMoniker Id="1a0e942f-5fc0-4be4-a568-d3b31a5f4919" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

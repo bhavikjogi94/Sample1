@@ -1,0 +1,145 @@
+﻿@model MVC.Models.Customer
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+@using (Html.BeginForm("Save", "AddUpdate", FormMethod.Post))
+{ 
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Customer</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.CustomerID, new { Value = "0" })
+
+        <div class="row">
+            @*Left Side Part*@
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.BirthDate, "{0:dd/MM/yyyy}", new { @class = "form-control", @tabindex = "3" })
+                        @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @tabindex = "5" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Country.CountryName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.CountryID, new SelectList(ViewBag.CountryList, "CountryID", "CountryName"), "Select", new { @class = "form-control", @tabindex = "7" })
+                        @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-margin-left-3 col-md-6">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.IsActive, new { @tabindex = "9" })
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-6">
+                        <input type="submit" value="Save" class="btn btn-success" tabindex="10" />
+                        <input id="btnFillData" type="submit" value="Fill Test Data" class="col-md-offset-2 btn btn-primary" tabindex="11" />
+                    </div>
+                </div>
+
+            </div>
+
+            @*Right Side Part*@
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @tabindex = "4" })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @tabindex = "6" })
+                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Province.ProvinceName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.ProvinceID, new SelectList(ViewBag.ProvinceList, "ProvinceID", "ProvinceName"), "Select", new { @class = "form-control", @tabindex = "8" })
+                        @Html.ValidationMessageFor(model => model.ProvinceID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+<div>
+    <a href="~/List/List">Back to List</a>
+</div>
+
+<script type="text/javascript">
+    function BindProvince(countryID) {
+        $.ajax({
+            url: '/AddUpdate/FillProvince',
+            dataType: "json",
+            type: "GET",
+            contentType: 'application/json; charset=utf-8',
+            data: { countryID: $('#CountryID').val() },
+            async: false,
+            cache: false,
+            success: function (data) {
+                $("#ProvinceID").html("");
+                $("#ProvinceID").append($('<option>Select</option>'));
+                $.each(data, function (i, data) {
+                    $("#ProvinceID").append(
+                        $('<option></option>').val(data.ProvinceID).html(data.ProvinceName));
+                });
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                alert(jqXhr.status + '-' + errorThrown + '\n' + jqXhr.responseJSON.Message);
+            }
+        });
+    }
+    $(document).ready(function () {
+        $('#FirstName').focus();
+        $('#btnFillData').click(function () {
+            $('#CustomerID').val('0');
+            $('#FirstName').val('First Name');
+            $('#LastName').val('Last Name');
+            $('#BirthDate').val('05/09/1962');
+            $('#Phone').val('568-895-8956');
+            $('#Email').val('Test@gmail.com');
+            $('#Address').val('45 Berry street ');
+            $('#IsActive').prop('checked', true);
+            $('#CountryID').val('2');
+            setTimeout(BindProvince, 500, '2');
+            $('#ProvinceID').val('53');
+        });
+    });
+</script>
+

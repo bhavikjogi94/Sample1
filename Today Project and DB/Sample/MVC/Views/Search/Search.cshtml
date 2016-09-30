@@ -1,0 +1,130 @@
+﻿@model MVC.Models.Customer
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search</h2>
+@Html.ActionLink("Back to List", "List", "List")
+@using (Html.BeginForm("Search", "Search", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-6">
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="col-md-3">
+                        @Html.Label("Phone#", htmlAttributes: new { @class = "control-label col-md-2" })
+                    </div>
+                    <div class="col-md-7">
+                        <div class="input-group">
+                            @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", id = "txtPhone", autocomplete = "off", placeholder = "Ex. 925-533-2525", @autofocus = "autofocus" })
+                            <span class="input-group-btn">
+                                <button id="btnSearch" type="button" class="btn btn-primary">
+                                    Search
+                                </button>
+                            </span>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div id="divNoRecord" class="dispnone">
+                    <div class="alert alert-danger fade in">
+                        <strong>Sorry!</strong> Record(s) not found.
+                    </div>
+                </div>
+                <div id="divResult" class="dispnone">
+                    <ul class="list-group">
+                        <li class="list-group-item active">
+                            <strong class="padRight10">Search result for Phone#</strong><strong id="lblSearchPhone"></strong>
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="padRight10">First Name</strong><span id="lblFirstName"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="padRight10">Last Name</strong><span id="lblLastName"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="padRight10">Birth Date</strong><span id="lblBirthDate"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="padRight10">Phone#</strong><span id="lblPhone"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="padRight10">Email</strong><span id="lblEmail"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="padRight10">Address</strong><span id="lblAddress"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="padRight10">Province</strong><span id="lblProvince"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="padRight10">Country</strong><span id="lblCountry"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="padRight10">Active</strong><span id="lblIsActive"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    function keypressHandler(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            $(this).blur();
+            $('#btnSearch').focus().click();
+        }
+    }
+    $(document).ready(function () {
+        $('form').keypress(keypressHandler);
+        $('#btnSearch').click(function () {
+            if ($('form').valid()) {
+                $.ajax({
+                    url: '/Search/Search',
+                    dataType: "json",
+                    type: "POST",
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ Phone: $('#txtPhone').val() }),
+                    async: false,
+                    //processData: false,
+                    cache: false,
+                    success: function (data) {
+                        if (data == '0') {
+                            $('#divNoRecord').attr('class', 'dispblock');
+                            $('#divResult').attr('class', 'dispnone');
+                        }
+                        else {
+                            $('#divNoRecord').attr('class', 'dispnone');
+                            $('#divResult').attr('class', 'dispblock');
+                            $('#lblSearchPhone').html(data.Phone);
+                            $('#lblFirstName').html(data.FirstName);
+                            $('#lblLastName').html(data.LastName);
+                            $('#lblBirthDate').html(ToJavaScriptDate(data.BirthDate));
+                            $('#lblPhone').html(data.Phone);
+                            $('#lblEmail').html(data.Email);
+                            $('#lblAddress').html(data.Address);
+                            $('#lblProvince').html(data.Province);
+                            $('#lblCountry').html(data.Country);
+                            $('#lblIsActive').html(data.IsActive);
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        alert(jqXhr.status + '-' + errorThrown + '\n' + jqXhr.responseJSON.Message);
+                    }
+                })
+            }
+        })
+    })
+</script>

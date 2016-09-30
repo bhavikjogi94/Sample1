@@ -1,0 +1,18 @@
+C:\Projects\Sample\BAL\bin\Debug\BAL.dll
+C:\Projects\Sample\BAL\bin\Debug\BAL.pdb
+C:\Projects\Sample\BAL\bin\Debug\DAL.dll
+C:\Projects\Sample\BAL\bin\Debug\Entity.dll
+C:\Projects\Sample\BAL\bin\Debug\DAL.pdb
+C:\Projects\Sample\BAL\bin\Debug\Entity.pdb
+C:\Projects\Sample\BAL\obj\Debug\BAL.csprojResolveAssemblyReference.cache
+C:\Projects\Sample\BAL\obj\Debug\BAL.dll
+C:\Projects\Sample\BAL\obj\Debug\BAL.pdb
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\BAL\bin\Debug\BAL.dll
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\BAL\bin\Debug\BAL.pdb
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\BAL\bin\Debug\DAL.dll
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\BAL\bin\Debug\Entity.dll
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\BAL\bin\Debug\DAL.pdb
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\BAL\bin\Debug\Entity.pdb
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\BAL\obj\Debug\BAL.csprojResolveAssemblyReference.cache
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\BAL\obj\Debug\BAL.dll
+C:\Users\Parul\Documents\Visual Studio 2015\Projects\Sample\BAL\obj\Debug\BAL.pdb
